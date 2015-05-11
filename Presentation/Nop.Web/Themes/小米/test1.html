@@ -1,0 +1,894 @@
+﻿<html>
+<head>
+
+    <title>宝氏照明商城</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="viewport content=" width="device-width," initial-scale="1″">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="Content/css/base.css" rel="stylesheet" type="text/css">
+    <link href="Content/css/Common.css" rel="stylesheet" type="text/css">
+    <link href="Content/css/jquery-ui-1.10.0.custom.min.css" rel="stylesheet" type="text/css">
+    <script src="Scripts/jquery-1.10.1.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-ui-1.10.0.min.js" type="text/javascript"></script>
+    <script src="Scripts/public.common.js" type="text/javascript"></script>
+    <script src="Scripts/public.ajaxcart.js" type="text/javascript"></script>
+    <script src="Scripts/leftflowmenu.js" type="text/javascript"></script>
+    <link rel="shortcut icon" href="/images/ico.ico" mce_href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div id="dialog-notifications-success" title="通知" style="display:none;">
+    </div>
+    <div id="dialog-notifications-error" title="错误" style="display:none;">
+    </div>
+    <div id="bar-notification" class="bar-notification">
+        <span class="close" title="关闭">&nbsp;</span>
+    </div>
+    <script type="text/javascript">
+        AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
+    </script>
+    <div class="site-topbar">
+        <div class="container">
+            <div class="topbar-info " style="margin-left:100px">
+                <a href="/regist" class="ico-register">注册</a>
+                <span class="sep">|</span>
+                <a href="/login" class="ico-login">登录</a>
+                <span class="sep">|</span>
+                <a href="/wishlist" class="ico-wishlist">
+                    <span>收藏夹</span>
+                    <span id="Wishlist-qty">(0)</span>
+                </a>
+                <span class="sep">|</span>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('.headerNavMain').on('mouseenter', '#topcartlink', function () {
+                            $('#flyout-cart').addClass('active');
+                        });
+                        $('.headerNavMain').on('mouseleave', '#topcartlink', function () {
+                            $('#flyout-cart').removeClass('active');
+                        });
+                        $('.headerNavMain').on('mouseenter', '#flyout-cart', function () {
+                            $('#flyout-cart').addClass('active');
+                        });
+                        $('.headerNavMain').on('mouseleave', '#flyout-cart', function () {
+                            $('#flyout-cart').removeClass('active');
+                        });
+                    });
+                </script>
+            </div>
+            <div class="topbar-nav">
+                <a href="javascript:void(0)" target="_blank">艺术生活</a>
+                <span class="sep">|</span><a href="javascript:void(0)" target="_blank">态度社区</a>
+                <span class="sep">|</span><a href="javascript:void(0)" target="_blank">积分商城</a>
+                <span class="sep">|</span><a href="javascript:void(0)" target="_blank">宝氏照明商品移动版</a>
+            </div>
+
+        </div>
+    </div>
+    <div class="site-header container">
+        <div class="site-logo">
+            <a class="logo" href="/default" title="小米官网" onclick="_hmt.push(['_trackEvent','PC','首页_logo_0_']);"><i class="iconfont"></i></a>
+        </div>
+        <div class="header-info">
+            <div class="search-section">
+                <form id="J_searchForm" class="search-form clearfix" action="/search" method="get" novalidate="novalidate">
+                    <input type="text" class="search-text ui-autocomplete-input" id="small-searchterms" autocomplete="off" value="搜索您需要的商品" name="q" onfocus="if(this.value=='搜索您需要的商品')this.value=''" onblur="if(this.value=='') {this.value = '搜索您需要的商品';}" maxlength="100" data-autofocus="autofocus" x-webkit-speech="" x-webkit-grammar="builtin:translate"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                    <input type="submit" class="search-btn iconfont" value="搜索">
+                    <script type="text/javascript">
+                        function check_small_search_form() {
+                            var search_terms = $("#small-searchterms");
+                            if (search_terms.val() == "") {
+                                alert('请输入关键字');
+                                search_terms.focus();
+                                return false;
+                            }
+                            return true;
+                        }
+                        $(function () {
+                            $('#small-searchterms').autocomplete({
+                                delay: 500,
+                                minLength: 1,
+                                source: '/catalog/searchtermautocomplete',
+                                select: function (event, ui) {
+                                    $("#small-searchterms").val(ui.item.label);
+                                    setLocation(ui.item.producturl);
+                                    return false;
+                                }
+                            })
+                                    .data("ui-autocomplete")._renderItem = function (ul, item) {
+                                        var t = item.label;
+                                        //html encode
+                                        t = htmlEncode(t);
+                                        return $("<li></li>")
+                                        .data("item.autocomplete", item)
+                                        .append("<a>" + t + "</a>")
+                                    .appendTo(ul);
+                                    };
+                        });
+
+                    </script>
+                </form>
+            </div>
+            <div class="cart-section">
+                <a id="J_miniCart" class="mini-cart " href="/cart"><i class="iconfont"></i>购物车<span id="J_cartNum-qty" class="mini-cart-num J_cartNum">(0)</span></a>
+                <div id="J_miniCartList" class="mini-cart-list  " style="display: none;">
+                    <p class="loading">购物车中还没有商品，赶紧选购吧！</p>
+                </div>
+            </div>
+            <script>
+                $(".cart-section").mouseover(function () { $("#J_miniCart").addClass("mini-cart-on"); $("#J_miniCartList").show(); });
+                $(".cart-section").mouseleave(function () { $("#J_miniCartList").css("display", "none"); $("#J_miniCart").removeClass("mini-cart-on"); });
+                AjaxCart.init(false, '#J_cartNum-qty', '#Wishlist-qty', '#J_miniCart');
+            </script>
+        </div>
+        <!--左侧下拉菜单 -->
+        <div class="header-nav clearfix">
+            <div id="J_categoryContainer" class="nav-category nav-category-toggled">
+                <a class="btn-category-list" href="javascript:void(0)">全部商品分类</a>
+                <div class="nav-category-section" style="display: block;">
+                    <ul class="nav-category-list" id="nav-category-list">
+                        <li class="nav-category-item nav-category-item-first">
+                            <div class="nav-category-content subCate">
+                                <a class="title" href="/%E5%AE%A2%E5%8E%85%E7%81%AF%E5%85%B7">客厅灯具</a>
+                                <div class="links">
+                                    <a href="/%E6%A0%BC%E6%A0%85%E5%B0%84%E7%81%AF">格栅射灯</a>
+                                    <a href="/%E5%A4%A9%E8%8A%B1%E7%81%AF">天花灯</a>
+                                    <a href="/%E5%B9%B3%E6%9D%BF%E7%81%AF">平板灯</a>
+                                    <a href="/%E6%8A%95%E5%85%89%E7%81%AF">投光灯</a>
+                                    <a href="/%E7%81%AF%E5%B8%A6">灯带</a>
+                                </div>
+                                <div class="nav-category-children" style="top: auto; bottom: -130px;display:none">
+                                    <ul class="children-list">
+                                        <li>
+                                            <a href="/%E6%A0%BC%E6%A0%85%E5%B0%84%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">格栅射灯</span>
+                                            </a>
+                                            <a href="/%E5%A4%A9%E8%8A%B1%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">天花灯</span>
+                                            </a>
+                                            <a href="/%E5%B9%B3%E6%9D%BF%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">平板灯</span>
+                                            </a>
+                                            <a href="/%E6%8A%95%E5%85%89%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">投光灯</span>
+                                            </a>
+                                            <a href="/%E7%81%AF%E5%B8%A6">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">灯带</span>
+                                            </a>
+                                            <a href="/%E7%8E%B0%E4%BB%A3%E7%AE%80%E7%BA%A6%E5%AE%A2%E5%8E%85%E7%81%AF%E5%85%B7">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">LED球泡灯</span>
+                                            </a>
+                                            <a href="/%E5%AE%A2%E5%8E%85%E7%81%AF%E5%85%B7">其他</a>
+
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-category-item nav-category-item-first">
+                            <div class="nav-category-content subCate">
+                                <a class="title" href="/%E5%AE%B6%E5%B1%85%E7%85%A7%E6%98%8E">家居照明</a>
+                                <div class="links">
+                                    <a href="/%E8%8A%82%E8%83%BD%E5%85%89%E6%BA%90">节能光源</a>
+                                    <a href="/%E8%8A%82%E8%83%BD%E7%81%AF%E5%85%B7-2">节能灯具</a>
+                                    <a href="/%E5%AE%89%E8%A3%85%E7%A9%BA%E9%97%B4">安装空间</a>
+                                </div>
+                                <div class="nav-category-children" style="top: auto; bottom: -130px;display:none">
+                                    <ul class="children-list">
+                                        <li>
+                                            <a href="/%E8%8A%82%E8%83%BD%E5%85%89%E6%BA%90">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">节能光源</span>
+                                            </a>
+                                            <a href="/%E8%8A%82%E8%83%BD%E7%81%AF%E5%85%B7-2">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">节能灯具</span>
+                                            </a>
+                                            <a href="/%E5%AE%89%E8%A3%85%E7%A9%BA%E9%97%B4">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">安装空间</span>
+                                            </a>
+                                            <a href="/%E5%AE%B6%E5%B1%85%E7%85%A7%E6%98%8E">其他</a>
+
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-category-item nav-category-item-first">
+                            <div class="nav-category-content subCate">
+                                <a class="title" href="/%E6%88%B7%E5%A4%96%E7%85%A7%E6%98%8E">户外照明</a>
+                                <div class="links">
+                                    <a href="/%E8%B7%AF%E7%81%AF">路灯</a>
+                                    <a href="/%E6%8A%95%E5%85%89%E7%81%AF-2">投光灯</a>
+                                    <a href="/%E5%9C%B0%E5%9F%8B%E7%81%AF">地埋灯</a>
+                                    <a href="/%E6%B0%B4%E5%BA%95%E7%81%AF">水底灯</a>
+                                    <a href="/%E7%BA%BF%E5%9E%8B%E7%81%AF">线型灯</a>
+                                </div>
+                                <div class="nav-category-children" style="top: auto; bottom: -130px;display:none">
+                                    <ul class="children-list">
+                                        <li>
+                                            <a href="/%E8%B7%AF%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">路灯</span>
+                                            </a>
+                                            <a href="/%E6%8A%95%E5%85%89%E7%81%AF-2">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">投光灯</span>
+                                            </a>
+                                            <a href="/%E5%9C%B0%E5%9F%8B%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">地埋灯</span>
+                                            </a>
+                                            <a href="/%E6%B0%B4%E5%BA%95%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">水底灯</span>
+                                            </a>
+                                            <a href="/%E7%BA%BF%E5%9E%8B%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">线型灯</span>
+                                            </a>
+                                            <a href="/%E5%BA%AD%E9%99%A2%E7%81%AF-2">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">庭院灯</span>
+                                            </a>
+                                            <a href="/%E6%88%B7%E5%A4%96%E7%85%A7%E6%98%8E">其他</a>
+
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-category-item nav-category-item-first">
+                            <div class="nav-category-content subCate">
+                                <a class="title" href="/%E5%B7%A5%E7%A8%8B%E7%85%A7%E6%98%8E">工程照明</a>
+                                <div class="links">
+                                    <a href="/%E9%85%92%E5%BA%97%E7%81%AF%E9%A5%B0%E5%B7%A5%E7%A8%8B">酒店灯饰工程</a>
+                                    <a href="/%E5%8A%9E%E5%85%AC%E5%9C%BA%E6%89%80%E7%81%AF%E9%A5%B0">办公场所灯饰</a>
+                                    <a href="/%E5%88%AB%E5%A2%85%E7%85%A7%E6%98%8E%E7%81%AF%E9%A5%B0%E5%B7%A5%E7%A8%8B">别墅照明灯饰工程</a>
+                                    <a href="/%E4%BC%9A%E6%89%80%E7%81%AF%E9%A5%B0%E5%B7%A5%E7%A8%8B">会所灯饰工程</a>
+                                    <a href="/led%E6%99%AF%E8%A7%82%E7%85%A7%E6%98%8E%E7%81%AF%E9%A5%B0%E5%B7%A5%E7%A8%8B">LED景观照明灯饰工程</a>
+                                </div>
+                                <div class="nav-category-children" style="top: auto; bottom: -130px;display:none">
+                                    <ul class="children-list">
+                                        <li>
+                                            <a href="/%E9%85%92%E5%BA%97%E7%81%AF%E9%A5%B0%E5%B7%A5%E7%A8%8B">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">酒店灯饰工程</span>
+                                            </a>
+                                            <a href="/%E5%8A%9E%E5%85%AC%E5%9C%BA%E6%89%80%E7%81%AF%E9%A5%B0">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">办公场所灯饰</span>
+                                            </a>
+                                            <a href="/%E5%88%AB%E5%A2%85%E7%85%A7%E6%98%8E%E7%81%AF%E9%A5%B0%E5%B7%A5%E7%A8%8B">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">别墅照明灯饰工程</span>
+                                            </a>
+                                            <a href="/%E4%BC%9A%E6%89%80%E7%81%AF%E9%A5%B0%E5%B7%A5%E7%A8%8B">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">会所灯饰工程</span>
+                                            </a>
+                                            <a href="/led%E6%99%AF%E8%A7%82%E7%85%A7%E6%98%8E%E7%81%AF%E9%A5%B0%E5%B7%A5%E7%A8%8B">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">LED景观照明灯饰工程</span>
+                                            </a>
+                                            <a href="/%E5%95%86%E4%B8%9A%E7%85%A7%E6%98%8E%E5%B7%A5%E7%A8%8B">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">商业照明工程</span>
+                                            </a>
+                                            <a href="/%E5%B7%A5%E7%A8%8B%E7%85%A7%E6%98%8E">其他</a>
+
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-category-item nav-category-item-first">
+                            <div class="nav-category-content subCate">
+                                <a class="title" href="/%E5%AE%89%E8%A3%85%E4%BD%8D%E7%BD%AE">安装位置</a>
+                                <div class="links">
+                                    <a href="/%E5%90%8A%E7%81%AF">吊灯</a>
+                                    <a href="/%E5%90%B8%E9%A1%B6%E7%81%AF-2">吸顶灯</a>
+                                    <a href="/%E5%8F%B0%E7%81%AF">台灯</a>
+                                    <a href="/%E8%90%BD%E5%9C%B0%E7%81%AF">落地灯</a>
+                                    <a href="/%E5%A3%81%E7%81%AF-2">壁灯</a>
+                                </div>
+                                <div class="nav-category-children" style="top: auto; bottom: -130px;display:none">
+                                    <ul class="children-list">
+                                        <li>
+                                            <a href="/%E5%90%8A%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">吊灯</span>
+                                            </a>
+                                            <a href="/%E5%90%B8%E9%A1%B6%E7%81%AF-2">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">吸顶灯</span>
+                                            </a>
+                                            <a href="/%E5%8F%B0%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">台灯</span>
+                                            </a>
+                                            <a href="/%E8%90%BD%E5%9C%B0%E7%81%AF">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">落地灯</span>
+                                            </a>
+                                            <a href="/%E5%A3%81%E7%81%AF-2">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">壁灯</span>
+                                            </a>
+                                            <a href="/%E5%A3%81%E7%81%AF-3">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">壁灯</span>
+                                            </a>
+                                            <a href="/%E5%AE%89%E8%A3%85%E4%BD%8D%E7%BD%AE">其他</a>
+
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-category-item nav-category-item-first">
+                            <div class="nav-category-content subCate">
+                                <a class="title" href="/%E6%B0%B4%E6%99%B6%E7%81%AF">水晶灯</a>
+                                <div class="links">
+                                    <a href="/%E6%B0%B4%E6%99%B6%E5%BC%AF%E7%AE%A1">水晶弯管</a>
+                                    <a href="/%20%E9%87%91%E5%B1%9E%E5%90%88%E9%87%91"> 金属合金</a>
+                                    <a href="/%20%E5%B9%B3%E6%9D%BF%E6%B0%B4%E6%99%B6"> 平板水晶</a>
+                                    <a href="/%E7%8E%B0%E4%BB%A3%E6%B0%B4%E6%99%B6">现代水晶</a>
+                                </div>
+                                <div class="nav-category-children" style="top: auto; bottom: -130px;display:none">
+                                    <ul class="children-list">
+                                        <li>
+                                            <a href="/%E6%B0%B4%E6%99%B6%E5%BC%AF%E7%AE%A1">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">水晶弯管</span>
+                                            </a>
+                                            <a href="/%20%E9%87%91%E5%B1%9E%E5%90%88%E9%87%91">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text"> 金属合金</span>
+                                            </a>
+                                            <a href="/%20%E5%B9%B3%E6%9D%BF%E6%B0%B4%E6%99%B6">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text"> 平板水晶</span>
+                                            </a>
+                                            <a href="/%E7%8E%B0%E4%BB%A3%E6%B0%B4%E6%99%B6">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">现代水晶</span>
+                                            </a>
+                                            <a href="/%E6%B0%B4%E6%99%B6%E7%81%AF">其他</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-category-item nav-category-item-first">
+                            <div class="nav-category-content subCate">
+                                <a class="title" href="/LED%E7%81%AF%E5%85%B7-%E5%BC%80%E5%85%B3%E6%8F%92%E5%BA%A7">LED灯具-开关插座</a>
+                                <div class="links">
+                                    <a href="/%E6%B5%B4%E9%9C%B8-2">浴霸</a>
+                                    <a href="/%E5%BC%80%E5%85%B3-%E6%8F%92%E5%BA%A7">开关/插座</a>
+                                    <a href="/%E6%8F%92%E7%BA%BF%E6%9D%BF-%E5%9C%B0%E6%8F%92">插线板/地插</a>
+                                    <a href="/%E7%94%B5%E6%B0%94-%E9%85%8D%E4%BB%B6">电气/配件</a>
+                                </div>
+                                <div class="nav-category-children" style="top: auto; bottom: -130px;display:none">
+                                    <ul class="children-list">
+                                        <li>
+                                            <a href="/%E6%B5%B4%E9%9C%B8-2">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">浴霸</span>
+                                            </a>
+                                            <a href="/%E5%BC%80%E5%85%B3-%E6%8F%92%E5%BA%A7">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">开关/插座</span>
+                                            </a>
+                                            <a href="/%E6%8F%92%E7%BA%BF%E6%9D%BF-%E5%9C%B0%E6%8F%92">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">插线板/地插</span>
+                                            </a>
+                                            <a href="/%E7%94%B5%E6%B0%94-%E9%85%8D%E4%BB%B6">
+                                                <img src="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!40x40.jpg" alt="米键" srcset="http://img06.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1W0VTB4Vv1RXrhCrK!80x80.jpg 2x">
+                                                <span class="text">电气/配件</span>
+                                            </a>
+                                            <a href="/LED%E7%81%AF%E5%85%B7-%E5%BC%80%E5%85%B3%E6%8F%92%E5%BA%A7">其他</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="nav-main">
+                <ul class="nav-main-list J_menuNavMain clearfix">
+
+                    <li class="nav-main-item">
+                        <a href="/default"><span class="text">首页</span></a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a href="http://www.bosizm.com/t/%E4%BC%81%E4%B8%9A%E4%BB%8B%E7%BB%8D"><span class="text">企业介绍</span></a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a href="/t/招商加盟"><span class="text">招商加盟</span></a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a href="/配套灯具"><span class="text">宝氏动态</span></a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a href="/餐厅灯具"><span class="text">行业资讯</span></a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a href="http://www.bosizm.com/t/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC"><span class="text">联系宝氏</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script type="text/javascript">
+            jQuery("#nav-category-list").slide({ type: "menu", titCell: ".nav-category-item", targetCell: ".nav-category-children", delayTime: 300, triggerTime: 0, defaultPlay: false, returnDefault: true });
+        </script>
+        <!--左侧下拉菜单  end-->
+        <div class="open-buy-info">
+            <a href="javasctipt:void(0)">下轮开放购买：8月19日星期二</a>
+        </div>
+    </div>
+    <style>
+    </style>
+    <div class="container">
+        <div class="side-2">
+        </div>
+        <script type="text/javascript">
+            $(document).ready($(".nav-category-section").css("display", "block"))
+        </script>
+        <div class="row">
+            <div class="col col-16 offset4" style="float:right">
+                <!--右侧轮播 -->
+                <!--ps_box-->
+                <div class="ps_box">
+                    <div class="pics_switch">
+                        <div class="pb" style="margin-left: 0px; width: 1984px;">
+                            <div class="pic_box"><a class="pic_banner_001" target="_blank" href="##"><img src="/upload/1/images/20141212/q5ehozyc.fzr.jpeg" width="992" height="420"></a></div>
+                            <div class="pic_box"><a class="pic_banner_001" target="_blank" href="#"><img src="/upload/1/images/20141212/2vr2e5rm.tcm.jpeg" width="992" height="420"></a></div>
+                        </div>
+                        <div class="viewArrows prev" style="opacity: 0.4; display: block;"></div>
+                        <div class="viewArrows next" style="opacity: 0.4; display: block;"></div>
+                        <div class="clear"></div>
+                        <div class="pics_switch_clients">
+                            <ul>
+                                <li class="li_1 hover" style="opacity: 0.9;"><span class="current" style="opacity: 1;">1</span></li>
+                                <li class="li_2" style="opacity: 0.9;"><span style="opacity: 0.4;">2</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--case_box-->
+                <script>
+                    $(document).ready(function () {
+
+                        $(".pics_switch .pb").mouseover(function () {
+
+                            $(".viewArrows").show();
+                        });
+                        $(".pics_switch .pb").mouseleave(function () {
+
+                            $(".viewArrows").hide();
+                        });
+                    })
+                </script>
+                <script src="Scripts/jquery.easing.js" type="text/javascript"></script>
+                <script src="Scripts/studio.js" type="text/javascript"></script>
+                <!--右侧轮播 end -->
+                <style>
+                </style>
+                <div class="home-hd-show clearfix">
+                    <p>&nbsp;<a href="http://www.bosizm.com/家居照明"><img src="http://www.bosizm.com/Content/Images/uploaded/商品图片/New Folder/58pic_52fe7892a9b7f.jpg" width="297" height="153"></a>&nbsp; &nbsp; &nbsp;<a href="http://www.bosizm.com/客厅灯具"><img src="http://www.bosizm.com/Content/Images/uploaded/商品图片/New Folder/58pic_52fed4bfb8d4e.jpg" width="297" height="153"></a>&nbsp; &nbsp; &nbsp;<a href="http://www.bosizm.com/工程照明"><img src="http://www.bosizm.com/Content/Images/uploaded/商品图片/New Folder/58pic_52fed4dc4538b.jpg" width="297" height="153"></a></p>
+                </div>
+                <link href="Content/css/default.css" rel="stylesheet" type="text/css">
+            </div>
+        </div>
+        <div class="home-star-goods">
+            <div class="xm-plain-box J_starGoodsCarousel">
+                <div class="box-hd">
+                    <h3 class="title">特价商品</h3>
+
+                </div>
+                <div class="box-bd">
+                    <div class="xm-star-goods-list-wrap J_carouselWrap">
+                        <div class="xm-star-goods-list clearfix J_carouselList">
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E7%8E%B0%E4%BB%A3%E9%A3%8E%E6%A0%BCled%E5%8D%A7%E5%AE%A4%E5%90%B8%E9%A1%B6%E7%81%AF" alt="现代风格LED卧室吸顶灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007701_led_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">现代风格LED卧室吸顶灯</a></span>
+                                    <span class="item-desc">现代风格LED卧室吸顶灯</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E5%85%AB%E5%A4%B4%E7%A5%A5%E4%BA%91%E4%BB%BF%E5%8F%A4%E9%87%91%E5%B1%9E%E4%B8%AD%E5%BC%8F%E5%AE%A2%E5%8E%85%E7%81%AF" alt="八头祥云仿古金属中式客厅灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007672_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">八头祥云仿古金属中式客厅灯</a></span>
+                                    <span class="item-desc">仿古金属中式客厅灯</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E7%8E%B0%E4%BB%A3%E9%A3%8E%E6%A0%BC%E6%B0%B4%E6%99%B6%E7%A9%BA%E8%8A%B1%E9%A4%90%E5%90%8A%E7%81%AF" alt="现代风格水晶空花餐吊灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007680_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">现代风格水晶空花餐吊灯</a></span>
+                                    <span class="item-desc">水晶空花餐吊灯</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E5%9C%86%E5%BD%A2%E5%90%B8%E9%A1%B6%E7%81%AF%E9%A4%90%E5%8E%85%E7%81%AF" alt="圆形吸顶灯餐厅灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007703_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">圆形吸顶灯餐厅灯</a></span>
+                                    <span class="item-desc">圆形吸顶灯餐厅灯</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="home-star-goods">
+            <div class="xm-plain-box J_starGoodsCarousel">
+                <div class="box-hd">
+                    <h3 class="title">新品上架</h3>
+
+                </div>
+                <div class="box-bd">
+                    <div class="xm-star-goods-list-wrap J_carouselWrap">
+                        <div class="xm-star-goods-list clearfix J_carouselList">
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E5%90%AB%E8%8B%9E%E5%BE%85%E6%94%BE%E7%8E%B0%E4%BB%A3%E6%97%B6%E5%B0%9A%E5%AE%B6%E8%A3%85%E7%81%AF%E5%85%B7" alt="含苞待放现代时尚家装灯具"><img data-original="http://www.bosizm.com/content/images/thumbs/0007688_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">含苞待放现代时尚家装灯具</a></span>
+                                    <span class="item-desc">含苞待放</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E9%BB%91%E7%99%BD%E6%A3%AE%E6%9E%97%E5%9C%86%E5%BD%A2%E6%9C%A8%E8%89%BA%E5%8D%A7%E5%AE%A4%E4%B9%A6%E6%88%BF%E7%81%AF%E9%A5%B0%E4%B8%AD%E5%BC%8F%E9%A3%8E%E6%A0%BC%E7%81%AF%E5%85%B7" alt="黑白森林圆形木艺卧室书房灯饰中式风格灯具"><img data-original="http://www.bosizm.com/content/images/thumbs/0007692_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">黑白森林圆形木艺卧室书房灯饰中式风格灯具</a></span>
+                                    <span class="item-desc">黑白森林圆形木艺卧室书房灯饰中式风格灯具</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E7%94%B0%E5%9B%AD%E5%8D%B0%E8%8A%B1%E4%B8%AD%E5%BC%8F%E9%A3%8E%E6%A0%BC%E5%90%B8%E9%A1%B6%E7%81%AF%E5%85%B7%E4%B8%AD%E5%BC%8F%E5%8D%A7%E5%AE%A4%E7%81%AF%E9%A5%B0" alt="田园印花中式风格吸顶灯具中式卧室灯饰"><img data-original="http://www.bosizm.com/content/images/thumbs/0007697_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">田园印花中式风格吸顶灯具中式卧室灯饰</a></span>
+                                    <span class="item-desc">田园印花中式风格吸顶灯具中式卧室灯饰</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E7%9A%87%E5%AE%A4%E9%A3%8E%E5%8D%8E-%E5%AE%B6%E5%BA%AD%E8%A3%85%E9%A5%B0%E7%81%AF%E5%85%B7-%E6%B5%81%E8%A1%8C%E7%81%AF%E9%A5%B0" alt="皇室风华 家庭装饰灯具 流行灯饰"><img data-original="http://www.bosizm.com/content/images/thumbs/0007700_-_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">皇室风华 家庭装饰灯具 流行灯饰</a></span>
+                                    <span class="item-desc">皇室风华 家庭装饰灯具 流行灯饰</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="home-star-goods">
+            <div class="xm-plain-box J_starGoodsCarousel">
+                <div class="box-hd">
+                    <h3 class="title">明星单品</h3>
+
+                </div>
+                <div class="box-bd">
+                    <div class="xm-star-goods-list-wrap J_carouselWrap">
+                        <div class="xm-star-goods-list clearfix J_carouselList">
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E5%9B%9B%E8%A7%92%E9%95%82%E7%A9%BA%E9%95%B6%E8%8A%B1%E6%AD%A3%E6%96%B9%E5%BD%A2%E7%8E%B0%E4%BB%A3%E7%AE%80%E7%BA%A6%E7%81%AF%E9%A5%B0" alt="四角镂空镶花正方形现代简约灯饰"><img data-original="http://www.bosizm.com/content/images/thumbs/0007674_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">四角镂空镶花正方形现代简约灯饰</a></span>
+                                    <span class="item-desc">简约灯饰</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E7%8E%B0%E4%BB%A3%E7%AE%80%E7%BA%A6%E9%A3%8E%E6%A0%BC%E9%95%82%E7%A9%BA%E4%BA%9A%E5%85%8B%E5%8A%9B%E9%A4%90%E5%8E%85%E7%81%AF%E9%A5%B0" alt="现代简约风格镂空亚克力餐厅灯饰"><img data-original="http://www.bosizm.com/content/images/thumbs/0007677_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">现代简约风格镂空亚克力餐厅灯饰</a></span>
+                                    <span class="item-desc">镂空亚克力餐厅灯饰</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E5%8F%8C%E8%89%B2%E7%89%A1%E4%B8%B9%E7%8E%B0%E4%BB%A3%E9%A3%8E%E6%A0%BC%E6%96%B9%E5%BD%A2%E5%8D%A7%E5%AE%A4%E7%81%AF" alt="双色牡丹现代风格方形卧室灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007685_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">双色牡丹现代风格方形卧室灯</a></span>
+                                    <span class="item-desc">双色牡丹现代风格方形卧室灯</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E7%99%BD%E8%89%B2%E4%B8%AA%E6%80%A7%E7%8E%B0%E4%BB%A3%E9%A3%8E%E6%A0%BC%E9%A4%90%E5%90%8A%E7%81%AF" alt="白色个性现代风格餐吊灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007683_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">白色个性现代风格餐吊灯</a></span>
+                                    <span class="item-desc">白色个性现代风格餐吊灯</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E8%8A%B1%E7%AB%A5-%E7%85%A7%E6%98%8E%E7%81%AF%E9%A5%B0-%E5%AE%A2%E5%8E%85%E7%81%AF%E5%85%B7-%E5%A4%8D%E5%BC%8F%E6%A5%BC%E5%A4%A7%E5%90%8A%E7%81%AF" alt="花童 照明灯饰 客厅灯具 复式楼大吊灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007687_-_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">花童 照明灯饰 客厅灯具 复式楼大吊灯</a></span>
+                                    <span class="item-desc">创意，个性</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E5%85%83%E7%90%83%E5%A4%A7%E7%BA%A2%E7%89%A1%E4%B8%B9%E5%90%8A%E7%81%AF" alt="元球大红牡丹吊灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007695_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">元球大红牡丹吊灯</a></span>
+                                    <span class="item-desc">元球大红牡丹吊灯</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E7%99%BD%E8%89%B2%E4%B8%AA%E6%80%A7%E8%A3%85%E9%A5%B0%E5%90%8A%E7%81%AF-%E7%AE%80%E7%BA%A6%E7%8E%B0%E4%BB%A3%E5%90%8A%E7%81%AF" alt="白色个性装饰吊灯 简约现代吊灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007698_-_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">白色个性装饰吊灯 简约现代吊灯</a></span>
+                                    <span class="item-desc">白色个性装饰吊灯 简约现代吊灯</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E5%8F%8C%E8%89%B2%E6%B0%B4%E6%99%B6%E7%8E%B0%E4%BB%A3%E7%AE%80%E7%BA%A6%E5%AE%A2%E5%8E%85%E7%81%AF" alt="双色水晶现代简约客厅灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007667_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">双色水晶现代简约客厅灯</a></span>
+                                    <span class="item-desc">双色水晶现代简约客厅灯</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="home-star-goods">
+            <div class="xm-plain-box J_starGoodsCarousel">
+                <div class="box-hd">
+                    <h3 class="title">家居生活</h3>
+
+                </div>
+                <div class="box-bd">
+                    <div class="xm-star-goods-list-wrap J_carouselWrap">
+                        <div class="xm-star-goods-list clearfix J_carouselList">
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E6%B5%B4%E9%9C%B8" alt="浴霸"><img data-original="http://www.bosizm.com/content/images/thumbs/0007682_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">浴霸</a></span>
+                                    <span class="item-desc">浴霸</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E6%AC%A7%E5%BC%8F%E6%A5%BC%E6%A2%AF%E7%81%AF%E5%A4%A7%E5%A0%82%E7%81%AF%E9%A5%B0" alt="欧式楼梯灯大堂灯饰"><img data-original="http://www.bosizm.com/content/images/thumbs/0007691_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">欧式楼梯灯大堂灯饰</a></span>
+                                    <span class="item-desc">大堂灯饰</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E7%BE%8E%E5%BC%8F%E9%A3%8E%E6%A0%BC%E5%8D%95%E5%A3%81%E7%81%AF" alt="美式风格单壁灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007694_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">美式风格单壁灯</a></span>
+                                    <span class="item-desc">美式风格单壁灯</span>
+                                </div>
+                            </div>
+                            <div class="xm-star-goods-item">
+                                <div class="item-content">
+                                    <span class="item-thumb">
+                                        <a href="/%E7%BE%8E%E6%9E%97%E8%B0%B7%E7%81%AF%E9%A5%B0%E5%AE%B6%E5%B1%85%E7%85%A7%E6%98%8E%E5%A4%8D%E5%BC%8F%E5%AE%A2%E5%8E%85%E5%90%8A%E7%81%AF" alt="美林谷灯饰家居照明复式客厅吊灯"><img data-original="http://www.bosizm.com/content/images/thumbs/0007670_220.jpeg" src="/images/default/grey.gif"></a>
+                                    </span>
+                                    <span class="item-title"><a href="#">美林谷灯饰家居照明复式客厅吊灯</a></span>
+                                    <span class="item-desc">家居照明复式客厅吊灯</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="Scripts/lazyload.js" charset="utf-8"></script>
+        <div style="clear: both; text-align: right; width: 100%;  height:100px ">
+        </div>
+        <div class="site-footer" style="">
+            <div class="container">
+                <div class="footer-service">
+                    <ul class="list-service clearfix">
+                        <li>
+                            <a rel="nofollow" href="javascript:void(0)" target="_blank">
+                                <i class="iconfont"><img src="/images/default/icosearch.png"></i>
+                                <strong>安心甄选无忧</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" href="javascript:void(0)" target="_blank">
+                                <i class="iconfont"><img src="/images/default/icoreback.png"></i>
+                                <strong>7天无理由退货</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" href="javascript:void(0)" target="_blank">
+                                <i class="iconfont"><img src="/images/default/icoreplace.png"></i>
+                                <strong>15天免费换货</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" href="javascript:void(0)" target="_blank">
+                                <i class="iconfont"><img src="/images/default/freeShip.png"></i>
+                                <strong>满100元包邮</strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" href="javascript:void(0)" target="_blank">
+                                <i class="iconfont"><img src="/images/default/netpoint.png"></i>
+                                <strong>460余家售后网点</strong>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="footer-links clearfix">
+
+                    <dl class="col-links col-links-first">
+                        <dt>帮助中心</dt>
+
+
+
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E8%B4%AD%E7%89%A9%E6%8C%87%E5%8D%97" target="_blank">购物指南</a></dd>
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E9%85%8D%E9%80%81%E6%96%B9%E5%BC%8F" target="_blank">配送方式</a></dd>
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E6%94%AF%E4%BB%98%E6%96%B9%E5%BC%8F" target="_blank">支付方式</a></dd>
+
+                    </dl>
+                    <dl class="col-links col-links-first">
+                        <dt>服务支持</dt>
+
+
+
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E5%94%AE%E5%90%8E%E6%94%BF%E7%AD%96" target="_blank">售后政策</a></dd>
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E7%9B%B8%E5%85%B3%E4%B8%8B%E8%BD%BD" target="_blank">相关下载</a></dd>
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E8%87%AA%E5%8A%A9%E6%9C%8D%E5%8A%A1" target="_blank">自助服务</a></dd>
+
+                    </dl>
+                    <dl class="col-links col-links-first">
+                        <dt>宝氏之家</dt>
+
+
+
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E5%AE%9D%E6%B0%8F%E4%B9%8B%E5%AE%B6" target="_blank">宝氏之家</a></dd>
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E9%94%80%E5%94%AE%E7%BD%91%E7%82%B9" target="_blank">销售网点</a></dd>
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E9%A2%84%E7%BA%A6%E5%88%B0%E5%BA%97%E6%9C%8D%E5%8A%A1" target="_blank">预约到店服务</a></dd>
+
+                    </dl>
+                    <dl class="col-links col-links-first">
+                        <dt>关于宝氏</dt>
+
+
+
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E5%85%B3%E4%BA%8E%E5%AE%9D%E6%B0%8F" target="_blank">关于宝氏</a></dd>
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E5%8A%A0%E5%85%A5%E5%AE%9D%E6%B0%8F" target="_blank">加入宝氏</a></dd>
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC" target="_blank">联系我们</a></dd>
+
+                    </dl>
+                    <dl class="col-links col-links-first">
+                        <dt>关注我们</dt>
+
+
+
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/QQ%E7%A9%BA%E9%97%B4" target="_blank">QQ空间</a></dd>
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E5%AE%98%E6%96%B9%E5%BE%AE%E4%BF%A1" target="_blank">官方微信</a></dd>
+                        <dd><a rel="nofollow" href="http://www.bosizm.com/t/%E6%96%B0%E6%B5%AA%E5%BE%AE%E5%8D%9A" target="_blank">新浪微博</a></dd>
+
+                    </dl>
+
+                    <dl class="col-links col-links-first">
+                        <div class="col-contact">
+                            <p class="phone">4006-737-969</p>
+                            <p>周一至周六 8:30-17:30<br>（仅收市话费）</p>
+                            <a rel="nofollow" class="btn btn-primary btn-small" href="javascript:void(0)" target="_blank">24小时在线客服</a>
+                        </div>
+                    </dl>
+                </div>
+
+            </div>
+        </div>
+
+        <script type="text/javascript" src="scripts/Common.js"></script>
+        <script type="text/javascript" src="scripts/quicklinks.js"></script>
+
+        <script type="text/javascript">
+            var _baseUrl = 'http://www.fengbuy.com/';
+            var baseJSUrl = ' /js/';
+            var baseCSSUrl = ' /css/';
+
+
+            var refreshCartUrl = "http://www.fengbuy.com/checkout/cart/refreshCartAjax/";//购物车
+            var recentlyViewedUrl = "/recentlyviewedproducts"; //最近浏览
+            var saveMessageUrl = "http://www.fengbuy.com/account/message/saveAjax/";//提交留言
+            var checkout_Url = "http://www.fengbuy.com/checkout/cart/";//去购物车并结算
+            var go_buy = "http://www.fengbuy.com/all.html";//购买
+            var place_url = " /images/place.png";//loading图片
+            var validateCode_url = "http://www.fengbuy.com/productcomment/comment/validateCode/";//获取验证码
+            var delCart_url = "http://www.fengbuy.com/checkout/cart/deleteAjax/";
+            var account_order_url = "/customer/orders/1";
+            var account_address_url = "/customer/addresses";
+            var qqAcountUrl = "http://wpa.qq.com/msgrd?v=1&uin=113683027&site=qq&menu=yes";
+
+            var account_jf_url = "/customer/rewardpoints";
+            var account_comment_url = "http://www.fengbuy.com/account/order/myComments/";
+            var account_consult_url = "http://www.fengbuy.com/account/consult/productConsult/";
+            var account_message_url = "http://www.fengbuy.com/account/message/index/";
+            var account_arrival_url = "http://www.fengbuy.com/account/alerts/index/";
+            var account_reduce_url = "http://www.fengbuy.com/account/notification/index/";
+            var unreadNewMsgUrl = "http://www.fengbuy.com/account/msg/new/";
+            //Dialog icon base path
+            ds.Dialog.defaults.iconBasePath = ' /images/';
+            //购物车
+            //ds.loadScript(baseJSUrl + 'http://www.fengbuy.com/quick_links.js');
+        </script>
+        <style>
+            .rating {
+                height: 16px;
+                width: 80px;
+                background: url(/images/star-x-inactive.png) 0 0 repeat-x;
+            }
+                .rating div {
+                    height: 16px;
+                    background: url(/images/star-x-active.png) 0 0 repeat-x;
+                }
+        </style>
+    </div>
+    <ul class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all" id="ui-id-1" tabindex="0" style="z-index: 1; display: none;"></ul><div class="quick_links_wrap"><div class="quick_links_panel"><div id="quick_links" class="quick_links"><a href="#top" class="return_top"><i class="top"></i><span>返回顶部</span></a><a href="#" class="my_qlinks"><i class="setting"></i><span>个人中心</span></a><a href="#" class="history_list"><i class="view"></i><span>最近浏览</span></a><a target="_blank" href="http://wpa.qq.com/msgrd?v=1&amp;uin=113683027&amp;site=qq&amp;menu=yes" class="leave_message"><i class="qa"></i><span>联系客服</span></a></div><div class="quick_toggle"><a href="javascript:;" class="toggle" title="展开/收起">×</a></div></div><div id="quick_links_pop" class="quick_links_pop hide"></div></div>
+</body>
+</html>

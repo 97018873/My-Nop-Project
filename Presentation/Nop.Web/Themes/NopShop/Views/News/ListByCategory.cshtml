@@ -1,0 +1,24 @@
+﻿
+@using Nop.Web.Models.News;
+@model NewsItemListModel
+<div class="list-group tab-pane @((bool)ViewData["FLAG"]==true?"active":"")" style="min-height:313px" id="@ViewData["DOMID"]">
+    @if (Model.NewsItems.Count != 0)
+    {
+    <div class="panel-body" style="min-height:313px;padding:0 0 0 0;">
+        @foreach (var item in Model.NewsItems)
+        {
+            <a href="@Url.RouteUrl("NewsItem", new { SeName = item.SeName })" class="list-group-item"><span class="col-md-9 article-content" style="padding:0 0 0 0;"><img src="/Content/img/slide_p.png">@item.Title</span><span class="article-time col-md-3" style="padding:0 0 0 0;">@item.CreatedOn</span></a>
+           
+        }
+    </div>
+     <div class="list-group-item panel-footer"><a class="pull-right more" href="@Url.Action("list","news",new {category=Model.NewsItems.FirstOrDefault().Category})">更多</a></div>
+    }
+    else
+    {
+        <div class="panel-body" style="min-height:313px;padding:0 0 0 0;">
+            <a href="#" class="list-group-item"><img src="/Content/img/slide_p.png">此分类暂无文章</a>
+        </div>
+        <div class="list-group-item panel-footer" style="height:40px"></div>
+    }
+ 
+</div>

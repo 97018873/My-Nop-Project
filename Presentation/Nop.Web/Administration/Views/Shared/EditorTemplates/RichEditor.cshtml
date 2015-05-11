@@ -1,0 +1,30 @@
+﻿@model String
+@using Nop.Core
+@using Nop.Services.Security
+@using Nop.Web.Framework.UI;
+@{
+    //we do not bundle this script file (does not work for some reasons in bundle)
+    Html.AddScriptParts("~/ueditor/ueditor.config.js", true);
+    Html.AddScriptParts("~/ueditor/ueditor.all.js", true);
+    var permissionService = EngineContext.Current.Resolve<IPermissionService>();
+    var allowJbimages = false;
+    var allowRoxyFileman = permissionService.Authorize(StandardPermissionProvider.HtmlEditorManagePictures);
+    //TinyMCE picture browser does not work in a virtual category
+    //so if you're running in a virtual directory, then uncomment the code below:
+    //allowJbimages = true;
+    //allowRoxyFileman =false;
+    
+
+    var random = CommonHelper.GenerateRandomInteger();
+}
+
+
+<script id="full" name="full" type="text/plain" style="width:800px;height:500px">
+   @Html.Raw(ViewData.TemplateInfo.FormattedModelValue)
+</script>
+<script>
+    var ue = UE.getEditor('full', {
+        autoHeight: false,
+        initialFrameWidth: 800,
+    }).setHeight(500);
+</script>

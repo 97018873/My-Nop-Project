@@ -1,0 +1,178 @@
+/*.container{ height: 592px;margin-bottom: 200px
+}*/
+
+/*rightWrap*/
+ /**/
+    .ps_box,.pics_switch{width:992px;position:relative;float:right}
+    .pic_banner_001{position:relative}
+    .pics_switch .pic_box{}
+	.ps_box { margin-bottom:0px;width:992px;}
+	.pics_switch { position:relative;  margin:auto; height:419px; background:#dfdfdf; overflow:hidden;_width:expression(document.body.offsetWidth - 100)}
+	.pics_switch .pb { height:419px;width:992px}
+	.pics_switch .pic_box { /*position:absolute; left:0; top:0;*/ float:right; height:419px; overflow:hidden;position:relative}
+	.pics_switch .pic_box a { margin:auto; display:block;  height:419px;width:992px;position:relative; overflow:hidden; }
+	.pics_switch .pic_box a img{width:992px}
+	/*×óÓÒ·­Ò³¼ýÍ·*/
+	.viewArrows { display:none; width:50px; height:50px; line-height:50px; cursor:pointer; text-indent:-99999999px; position:absolute; top:169px;z-index:2222;_display:none;*display:none}
+	.prev { left:0px; background:url(/images/default/prev.png) center center no-repeat;}
+	.next { right:0px; background:url(/images/default/next.png) center center no-repeat;}
+
+	/*.pics_switch .pic_box a.pic_banner_001 { background:url(http://ww3.sinaimg.cn/large/adde8400gw1eblxy40vs6j218g0g4wi7.jpg) center top no-repeat;}
+	.pics_switch .pic_box a.pic_banner_002 { background:url(http://ww2.sinaimg.cn/large/adde8400gw1eblxzy7emij218g0g4160.jpg) center top no-repeat;}
+	.pics_switch .pic_box a.pic_banner_003 { background:url(http://ww3.sinaimg.cn/large/adde8400gw1eblxxxsai8j218g0g4jux.jpg) center top no-repeat;}
+	.pics_switch .pic_box a.pic_banner_004 { background:#000 url(http://ww1.sinaimg.cn/large/adde8400gw1ebly43852cj218g0g4wi0.jpg) center top no-repeat;}*/
+
+	.pic_box_style_1 { background:#000000;}
+	.pic_box_style_2 { background:#1b55d7;}
+	.pic_box_style_3 { background:#4264a9;}
+	.pic_box_style_4 { background:#000000;}
+	.pic_box_style_5 { background:#101117;}
+	.pic_box_style_6 { background:#1e1e20;}
+	/**/
+	.ps_box .pics_switch_clients {  width:990px; height:80px; position:absolute; left:0; bottom:0; overflow:hidden;}
+	.ps_box .pics_switch_clients ul {
+height: auto;
+overflow: hidden;
+float: right;
+/*margin-right: 80px;*/
+margin-top: 40px;
+	}
+	.ps_box .pics_switch_clients ul li { float: left;
+	    margin-right: 8px;
+cursor: pointer;
+display: inline-block;
+width: 29px;
+height: 20px;
+/*border: 1px solid rgba(255,255,255,0.3);*/
+font-size: 12px;
+text-align: center;
+color: white;
+/* background: #c3c3c3; */
+background: rgba(0,0,0,0.3); }
+	.ps_box .pics_switch_clients ul li span {  width:10px; height:5px;color:white }
+	/*.ps_box .pics_switch_clients ul li.li_1 span { background-position:0 -124px;}
+	.ps_box .pics_switch_clients ul li.li_2 span { background-position:-159px -124px;}
+	.ps_box .pics_switch_clients ul li.li_3 span { background-position:-318px -124px;}
+	.ps_box .pics_switch_clients ul li.li_4 span { margin-right:0; background-position:-477px -124px;}
+	.ps_box .pics_switch_clients ul li.li_5 span { background-position:-636px -124px;}
+	.ps_box .pics_switch_clients ul li.li_6 span { background-position:-795px -124px;}
+	.ps_box .pics_switch_clients ul li.li_1 .hover { background-position:0 -185px;}
+	.ps_box .pics_switch_clients ul li.li_2 .hover { background-position:-159px -185px;}
+	.ps_box .pics_switch_clients ul li.li_3 .hover { background-position:-318px -185px;}
+	.ps_box .pics_switch_clients ul li.li_4 .hover { background-position:-477px -185px;}
+	.ps_box .pics_switch_clients ul li.li_5 .hover { background-position:-636px -185px;}
+	.ps_box .pics_switch_clients ul li.li_6 .hover { background-position:-795px -185px;}
+	.ps_box .pics_switch_clients ul li.li_1 .current { background-position:0 -185px;}
+	.ps_box .pics_switch_clients ul li.li_2 .current { background-position:-159px -185px;}
+	.ps_box .pics_switch_clients ul li.li_3 .current { background-position:-318px -185px;}
+	.ps_box .pics_switch_clients ul li.li_4 .current { background-position:-477px -185px;}
+	.ps_box .pics_switch_clients ul li.li_5 .current { background-position:-636px -185px;}
+	.ps_box .pics_switch_clients ul li.li_6 .current { background-position:-795px -185px;}*/
+/*rightWrapEnd*/
+/*rightDis*/
+.home-hd-show {
+border-top: 1px solid #dfdfdf;
+border-bottom: 1px solid #dfdfdf;
+    float: right;
+    width: 990px;
+}
+.home-hd-show .hd-show-item-first {
+width: 329px;
+}
+.home-hd-show .hd-show-item {
+float: left;
+width: 329px;
+height: 170px;
+border-right: 1px solid #dfdfdf;
+overflow: hidden;
+_zoom: 1;
+background: #f3f3f3;
+}
+/*rightDisEnd*/
+
+/*floor*/
+.home-star-goods {
+margin-top: 10px;
+margin-bottom: 15px;
+}
+.xm-plain-box .box-hd {
+position: relative;
+height: 50px;
+}
+.xm-plain-box .box-hd .title {
+margin: 0;
+font-size: 18px;
+font-weight: 400;
+line-height: 50px;
+color: #333;
+}
+.xm-plain-box .box-hd .more {
+position: absolute;
+top: 0;
+right: 0;
+}
+.xm-recommend-page {
+width: 60px;
+margin: 20px 0 0;
+}
+.xm-recommend-page .page-btn-prev {
+border-right: 0;
+}
+.xm-plain-box .box-bd {
+border: 1px solid #dfdfdf;
+    border-right: 0px;
+    width: 1235px;
+    
+background: #fff;
+}
+.home-star-goods .xm-star-goods-list-wrap {
+width: 1238px;
+/*height: 308px;*/
+}
+.xm-star-goods-list-wrap .xm-star-goods-item {
+float: left;
+width: 308px;
+height: 309px;
+border-right: 1px solid #dfdfdf;
+border-top: 1px solid #dfdfdf;
+}
+.xm-star-goods-list-wrap .xm-star-goods-item .item-content {
+display: block;
+height: 288px;
+padding: 4px;
+border: 6px solid #fff;
+text-align: center;
+color: #000;
+-webkit-transition: border-color .5s;
+transition: border-color .5s;
+}
+
+.xm-star-goods-list-wrap .xm-star-goods-item .item-thumb {
+display: block;
+margin-bottom: 10px;
+}
+a {
+color: #8c8c8c;
+text-decoration: none;
+}
+.xm-star-goods-list-wrap .xm-star-goods-item .item-thumb img {
+width: 220px;
+height: 220px;
+}
+.xm-star-goods-list-wrap .xm-star-goods-item .item-title {
+display: block;
+font-size: 16px;
+}
+.xm-star-goods-list-wrap .xm-star-goods-item .item-title a {
+color: #000;
+}
+.xm-star-goods-list-wrap .xm-star-goods-item .item-desc {
+display: block;
+font-size: 12px;
+color: #8c8c8c;
+    
+}
+
+
+
+/*floorEnd*/

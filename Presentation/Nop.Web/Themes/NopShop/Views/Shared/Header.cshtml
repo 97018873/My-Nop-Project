@@ -1,0 +1,35 @@
+﻿<div class="container header-notifications">
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("_Notifications")
+        </div>
+    </div>
+</div>
+<div class="header-middle"><!--header-middle-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="logo pull-left">
+                    <img src="/Themes/nopshop/content/css/images/logod.png"  >
+                </div>
+                <div class="btn-group pull-right">
+                    @Html.Action("LanguageSelector", "Common")
+                    @Html.Action("CurrencySelector", "Common")
+                    @Html.Action("TaxTypeSelector", "Common")
+                </div>
+            </div>
+            <div class="col-sm-7">
+                @Html.Action("HeaderLinks", "Common")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

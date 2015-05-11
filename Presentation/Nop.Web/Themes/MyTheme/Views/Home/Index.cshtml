@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+}
+<div class="page home-page">
+    <div class="page-body">dfdf
+        <div class="homepage-slider">
+            <div id="sequence">
+                <ul class="sequence-canvas">
+                    <!-- Slide 1 -->
+                    <li class="bg4">
+                        <!-- Slide Title -->
+                        <h2 class="title">CAE计算机辅助工程</h2>
+                        <!-- Slide Text -->
+                        <h3 class="subtitle" style="text-indent:2em">CAE(计算机辅助工程)技术是实现工业产品设计分析、模拟仿真与优化的核心技术，是支持工程师进行产品创新设计最重要的工具和手段，大量的工业界实践证实应用工程仿真技术已成为提升产品竞争力的必然趋势。</h3>
+                        <!-- Slide Image -->
+                        <img class="slide-img" src="img/homepage-slider/slide.png" alt="Slide 1" />
+                    </li>
+                    <!-- End Slide 1 -->
+                    <!-- Slide 2 -->
+                    <li class="bg3">
+                        <!-- Slide Title -->
+                        <h2 class="title">工业设计</h2>
+                        <!-- Slide Text -->
+                        <h3 class="subtitle" style="text-indent:2em">以工学、美学、经济学为基础对工业产品进行设计。工业设计分为产品设计、环境设计、传播设计、设计管理4类；包括造型设计、机械设计、电路设计、服装设计、环境规划、室内设计、建筑设计、UI设计、平面设计、包装设计、广告设计、动画设计、展示设计、网站设计等。</h3>
+                        <!-- Slide Image -->
+                        <img class="slide-img" src="img/homepage-slider/slide2.jpg" alt="Slide 2" />
+                    </li>
+                    <!-- End Slide 2 -->
+                    <!-- Slide 3 -->
+                    <li class="bg1">
+                        <!-- Slide Title -->
+                        <h2 class="title">虚拟现实技术</h2>
+                        <!-- Slide Text -->
+                        <h3 class="subtitle">基于虚拟现实技术的产品拆装技术在新产品开发、产品的维护以及操作培训方面具有独特的作用。在装配结束以后，系统能够记录装配过程的所有信息，并生成评审报告、视屏录像等供随后的分析使用。</h3>
+                        <!-- Slide Image -->
+                        <img class="slide-img" src="img/homepage-slider/slide3.jpg" alt="Slide 3" />
+                    </li>
+                    <!-- End Slide 3 -->
+                </ul>
+                <div class="sequence-pagination-wrapper">
+                    <ul class="sequence-pagination">
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @Html.Action("HomepageCategories", "Catalog")
+        @Html.Action("HomepageProducts", "Product")
+        @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+        @Html.Action("HomepageBestSellers", "Product")
+        @Html.Action("HomePageNews", "News")
+        @Html.Action("HomePagePolls", "Poll")
+        @Html.Widget("home_page_bottom")
+    </div>
+</div>

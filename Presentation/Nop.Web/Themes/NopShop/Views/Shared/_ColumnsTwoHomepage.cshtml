@@ -1,0 +1,128 @@
+﻿@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+}
+
+@{
+    //current category ID
+    int currentCategoryId = 16;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("category", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentCategoryId = Convert.ToInt32(Url.RequestContext.RouteData.Values["categoryId"].ToString());
+    }
+
+
+    //current manufacturer ID
+    int currentManufacturerId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("manufacturer", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentManufacturerId = Convert.ToInt32(Url.RequestContext.RouteData.Values["manufacturerId"].ToString());
+    }
+    //current product ID
+    int currentProductId = 0;
+    if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.RequestContext.RouteData.Values["action"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentProductId = Convert.ToInt32(Url.RequestContext.RouteData.Values["productId"].ToString());
+    }
+}
+<style>
+    .banner {
+        width: 98.5%;
+        margin-left: 15px;
+        box-shadow: 0px 0px 3px #999;
+        margin-top:5px;
+        margin-bottom:15px;
+    }
+</style>
+
+<section id="slider"><!--slider-->
+    <div class="homepage-slider">
+        <div id="sequence">
+            <ul class="sequence-canvas">
+                <!-- Slide 1 -->
+                <li class="bg4 animate-in" style="display: list-item; opacity: 1; z-index: 3;">
+                    <!-- Slide Title -->
+                    <h2 class="title" style="">CAE计算机辅助工程</h2>
+                    <!-- Slide Text -->
+                    <h3 class="subtitle" style="text-indent: 2em;">CAE(计算机辅助工程)技术是实现工业产品设计分析、模拟仿真与优化的核心技术，是支持工程师进行产品创新设计最重要的工具和手段，大量的工业界实践证实应用工程仿真技术已成为提升产品竞争力的必然趋势。</h3>
+                    <!-- Slide Image -->
+                    <img class="slide-img" src="@Url.Content("~/Themes/NopShop/Content/css/images/slide1.png")" alt="Slide 1" style="">
+                </li>
+                <!-- End Slide 1 -->
+                <!-- Slide 2 -->
+                <li class="bg3 animate-out" style="display: list-item; opacity: 1; z-index: 1;">
+                    <!-- Slide Title -->
+                    <h2 class="title" style="">工业设计</h2>
+                    <!-- Slide Text -->
+                    <h3 class="subtitle" style="text-indent: 2em;">以工学、美学、经济学为基础对工业产品进行设计。工业设计分为产品设计、环境设计、传播设计、设计管理4类；包括造型设计、机械设计、电路设计、服装设计、环境规划、室内设计、建筑设计、UI设计、平面设计、包装设计、广告设计、动画设计、展示设计、网站设计等。</h3>
+                    <!-- Slide Image -->
+                    <img class="slide-img" src="@Url.Content("~/Themes/NopShop/Content/css/images/slide2.jpg")" alt="Slide 2" style="">
+                </li>
+                <!-- End Slide 2 -->
+                <!-- Slide 3 -->
+                <li class="bg1 animate-out" style="display: list-item; opacity: 1; z-index: 1;">
+                    <!-- Slide Title -->
+                    <h2 class="title" style="">虚拟现实技术</h2>
+                    <!-- Slide Text -->
+                    <h3 class="subtitle" style="">基于虚拟现实技术的产品拆装技术在新产品开发、产品的维护以及操作培训方面具有独特的作用。在装配结束以后，系统能够记录装配过程的所有信息，并生成评审报告、视屏录像等供随后的分析使用。</h3>
+                    <!-- Slide Image -->
+                    <img class="slide-img" src="@Url.Content("~/Themes/NopShop/Content/css/images/slide3.jpg")" alt="Slide 3" style="">
+                </li>
+                <!-- End Slide 3 -->
+            </ul>
+            <div class="sequence-pagination-wrapper">
+                <ul class="sequence-pagination" style="display: block;">
+                    <li class="current">1</li>
+                    <li class="">2</li>
+                    <li class="">3</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+	</section><!--/slider-->
+
+@*<div class="container silde-show-container">
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.Widget("home_page_top")
+        </div>
+    
+    </div>
+</div>*@
+<div class="space15px"></div>
+<div class="container">
+    <div class="row">
+        
+        <div class="col-lg-3 col-md-4 col-sm-4 hidden-xs">
+            <div class="left-sidebar">
+                @if (IsSectionDefined("left"))
+                {
+                    @RenderSection("left")
+                }
+                else
+                {
+                    
+                    @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+                    @Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })
+                    @Html.Action("RecentlyViewedProductsBlock", "Product", new { productThumbPictureSize = 32 })    
+                    @Html.Action("PopularProductTags", "Catalog")
+                    @Html.Action("PollBlock", "Poll", new { systemKeyword = "LeftColumnPoll" })
+                }
+            </div>
+
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 padding-right">
+            @Html.Widget("main_column_before")
+            @RenderBody()
+            @Html.Widget("main_column_after")
+        </div>
+                
+    </div>
+</div>
+    <div class="container" style="height:10%; overflow:hidden;">
+        <img src="@Url.Content("~/Themes/NopShop/Content/css/images/banner2.jpg")" class="banner" />
+    </div>
+@Html.Action("HomePageNewss", "News")
+

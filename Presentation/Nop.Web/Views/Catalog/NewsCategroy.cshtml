@@ -1,0 +1,24 @@
+﻿<div class="block block-manufacturer-navigation">
+    <div class="title">
+        <strong>资讯分类</strong>
+    </div>
+    <div class="listbox">
+        <ul class="list">
+                <li class="@(((int)(ViewData["NewsCategory"]))==2?"active":"inactive")">
+                    <a href="/news?category=2">3D打印</a>
+                </li>
+            <li class="@(((int)(ViewData["NewsCategory"]))==1?"active":"inactive")">
+                <a href="/news?category=1">3D扫描</a>
+            </li>
+            <li class="@(((int)(ViewData["NewsCategory"]))==3?"active":"inactive")">
+                <a href="/news?category=3">结构仿真</a>
+            </li>
+            <li class="@(((int)(ViewData["NewsCategory"]))==5?"active":"inactive")">
+                <a href="/news?category=5">外形设计</a>
+            </li>
+            <li class="@(((int)(ViewData["NewsCategory"]))==6?"active":"inactive")">
+                <a href="/news?category=6">电子商务</a>
+            </li>
+        </ul>
+    </div>
+</div>
